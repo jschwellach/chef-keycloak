@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Managed by Chef - local changes may be overwritten -->
+<datasources xmlns="http://www.jboss.org/ironjacamar/schema"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.jboss.org/ironjacamar/schema http://docs.jboss.org/ironjacamar/schema/datasources_1_0.xsd">
+	<datasource jta="false" jndi-name="<%= @jndi_name %>" pool-name="h2" enabled="true" use-ccm="false">
+	    <connection-url>jdbc:h2:${jboss.server.data.dir}/<%= @h2_db_name %>;AUTO_SERVER=TRUE</connection-url>
+	    <driver>h2</driver>
+	    <security>
+	        <user-name><%= @h2_user %></user-name>
+	        <password><%= @h2_pass %></password>
+	    </security>
+	</datasource>
+</datasources>	
