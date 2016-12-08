@@ -2,6 +2,8 @@
 Cookbook to deploy Keycloak - Open Source Identity and Access Management
 This cookbook is based on the wildlfy cookbook (https://github.com/bdwyertech/chef-wildfly) by Brian Dwyer (https://github.com/bdwyertech)
 
+[![Build Status](https://travis-ci.org/jschwellach/chef-keycloak.svg?branch=master)](https://travis-ci.org/jschwellach/chef-keycloak)
+
 # Requirements
 - Chef Client 11+
 - Wildfly Cookbook (0.4.2)
