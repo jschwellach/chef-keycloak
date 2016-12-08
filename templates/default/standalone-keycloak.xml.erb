@@ -393,7 +393,11 @@
         <subsystem xmlns="urn:jboss:domain:undertow:3.0">
             <buffer-cache name="default"/>
             <server name="default-server">
-                <http-listener name="default" socket-binding="http" redirect-socket="https"/>
+            	<%- if node['wildfly']['ssl_forward'] == true %>
+                <http-listener name="default" socket-binding="http" redirect-socket="https" proxy-address-forwarding="true"/>
+            	<%- else %>
+            	<http-listener name="default" socket-binding="http" redirect-socket="https"/>
+            	<%- end %>
                 <host name="default-host" alias="localhost">
                     <location name="/" handler="welcome-content"/>
                     <filter-ref name="server-header"/>

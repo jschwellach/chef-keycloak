@@ -21,14 +21,14 @@
 include_recipe 'java' if node['wildfly']['install_java']
 include_recipe 'keycloak::install'
 
-if node['wildfly']['mysql']['enabled'] == 'true'
+if node['wildfly']['mysql']['enabled'] == 'true' || node['wildfly']['mysql']['enabled'] == true
   include_recipe 'wildfly::mysql_connector'
 end
-if node['wildfly']['postgresql']['enabled'] == 'true'
+if node['wildfly']['postgresql']['enabled'] == 'true' || node['wildfly']['postgresql']['enabled'] == true
   include_recipe 'wildfly::postgres_connector'
   include_recipe 'wildfly::postgres_datasources'
 end
 
-unless node['wildfly']['mysql']['enabled'] == 'true' || node['wildfly']['postgresql']['enabled'] == 'true'
+unless node['wildfly']['mysql']['enabled'] == 'true' || node['wildfly']['mysql']['enabled'] == true || node['wildfly']['postgresql']['enabled'] == 'true' || node['wildfly']['postgresql']['enabled'] == true
   include_recipe 'keycloak::h2_datasources'
 end
