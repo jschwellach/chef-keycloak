@@ -1,10 +1,10 @@
 # encoding: UTF-8
-# rubocop:disable LineLength
 #
-# Cookbook Name:: wildfly
-# Recipe:: mysql_datasources
+# Cookbook Name:: keycloak
+# Recipe:: h2_datasources
 #
-# Copyright (C) 2014 Brian Dwyer - Intelligent Digital Services
+# Copyright (C) 2016 Janos Schwellach
+# based on the wildfly cookbook from Brian Dwyer (https://github.com/bdwyertech/chef-wildfly)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
 #
 # => Check this out for defining datasources...

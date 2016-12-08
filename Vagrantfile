@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
-VAGRANTFILE_API_VERSION = '2'
+VAGRANTFILE_API_VERSION = '2'.freeze
 
 Vagrant.require_version '>= 1.5.0'
 
@@ -18,7 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #
   #   $ vagrant plugin install vagrant-omnibus
   #
-  if Vagrant.has_plugin?("vagrant-omnibus")
+  if Vagrant.has_plugin?('vagrant-omnibus')
     config.omnibus.chef_version = 'latest'
   end
 
@@ -27,7 +27,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.vm.box_url doesn't need to be specified.
   # config.vm.box = 'bento/ubuntu-14.04'
   config.vm.box = 'bento/centos-6.7'
-
 
   # Assign this VM to a host-only network IP, allowing you to access it
   # via the IP. Host-only networks can talk to the host machine as well as
@@ -52,9 +51,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider :virtualbox do |vb|
     # Don't boot with headless mode
     vb.gui = false
-  
     # Use VBoxManage to customize the VM. For example to change memory:
-    vb.customize ["modifyvm", :id, "--memory", "2048"]
+    vb.customize ['modifyvm', :id, '--memory', '2048']
   end
   #
   # View the documentation for the provider you're using for more
@@ -76,14 +74,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.berkshelf.except = []
 
   # chef
-  if ENV['CHEF_REPO'].to_s != ''
-	chef_repo = ENV['CHEF_REPO']
-  else
-	chef_repo = '~/chef-repo'
-  end
-  
+  chef_repo = if ENV['CHEF_REPO'].to_s != ''
+                ENV['CHEF_REPO']
+              else
+                '~/chef-repo'
+              end
+
   config.vm.provision :chef_solo do |chef|
-  	chef.cookbooks_path = ["../.", "#{chef_repo}/cookbooks"]
+    chef.cookbooks_path = ['../.', "#{chef_repo}/cookbooks"]
     chef.json = {
       mysql: {
         server_root_password: 'rootpass',

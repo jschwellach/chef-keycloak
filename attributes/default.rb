@@ -1,4 +1,23 @@
-# => This cookbook is based on the wildfly cookbook 
+# encoding: UTF-8
+#
+# Cookbook Name:: keycloak
+#
+# Copyright (C) 2016 Janos Schwellach
+# based on the wildfly cookbook from Brian Dwyer (https://github.com/bdwyertech/chef-wildfly)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# => This cookbook is based on the wildfly cookbook
 # => https://github.com/bdwyertech/chef-wildfly
 # => we are overwriting the necessary files with the files from the keycloak distribution
 
@@ -6,34 +25,34 @@
 default['wildfly']['version'] = '2.4.0'
 default['wildfly']['url'] = 'https://downloads.jboss.org/keycloak/2.4.0.Final/keycloak-2.4.0.Final.tar.gz'
 default['wildfly']['checksum'] = 'c30d8b2d934dd0bd2f7409a3e330ca54ecffc69897b2e1553d35973b72753409'
-  
-# => base directory  
+
+# => base directory
 default['wildfly']['base'] = '/opt/keycloak'
-  
+
 # => set user & group
 default['wildfly']['user'] = 'keycloak'
 default['wildfly']['group'] = 'keycloak'
-  
+
 # => set service name
 default['wildfly']['service'] = 'keycloak'
-  
+
 # => install java
 default['wildfly']['install_java'] = true
-  
+
 # => Hardcode JAVA_HOME into init.d configuration.
 # => Based on value of node['java']['java_home']
 default['wildfly']['java']['enforce_java_home'] = true
-  
+
 # => enable postgresql
 default['wildfly']['postgresql']['enabled'] = false
 
 # => enable mysql
 default['wildfly']['mysql']['enabled'] = false
-  
-# => configure the deployment mode (standalone or domain). 
+
+# => configure the deployment mode (standalone or domain).
 # => This will affect the configuration files below
 default['wildfly']['mode'] = 'standalone'
-  
+
 # => this is just for the wildfly recipe and will be overwritten by this cookbook in keycloak::configuration
 default['wildfly']['sa']['conf'] = 'standalone.xml'
 
@@ -43,7 +62,7 @@ default['wildfly']['smtp']['port'] = '25'
 default['wildfly']['smtp']['ssl'] = false
 default['wildfly']['smtp']['username'] = nil
 default['wildfly']['smtp']['password'] = nil
-  
+
 # => Interface Configuration
 # => Should probably put a proxy in front of these... Maybe NginX?
 default['wildfly']['int']['mgmt']['bind'] = '0.0.0.0'
@@ -59,8 +78,8 @@ default['wildfly']['int']['ajp']['port'] = '8009'
 
 # => Use this to offset all port bindings.  Each binding will be incremented by this value.
 default['wildfly']['int']['port_binding_offset'] = '0'
-  
+
 # => AWS S3_Ping Configuration
 default['wildfly']['aws']['s3_access_key'] = nil
 default['wildfly']['aws']['s3_secret_access_key'] = nil
-default['wildfly']['aws']['s3_bucket'] = nil;
+default['wildfly']['aws']['s3_bucket'] = nil

@@ -1,6 +1,9 @@
 # encoding: UTF-8
 #
-# Copyright (C) 2014 Brian Dwyer - Intelligent Digital Services
+# Cookbook Name:: keycloak
+#
+# Copyright (C) 2016 Janos Schwellach
+# based on the wildfly cookbook from Brian Dwyer (https://github.com/bdwyertech/chef-wildfly)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +16,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
 
 # => Wildfly User Configuration
 
@@ -22,7 +24,7 @@ default['wildfly']['acp'] = 'simple'
 
 # => By default, Wildfly expexts this password hash format:
 # => # => username=HEX( MD5( username ':' realm ':' password))
-  
+
 # => Default user - keycloak - s3cr3t
 default['wildfly']['users']['mgmt'] = [
   { id: 'keycloak', passhash: 'e3deb717efeff956c5481df359972695' }
@@ -37,5 +39,5 @@ default['wildfly']['users']['app'] = [
 # Add application roles eg.
 #
 default['wildfly']['roles']['app'] = [
-  #{ id: 'wildfly', roles: 'role1,role2' }
+  # { id: 'wildfly', roles: 'role1,role2' }
 ]
