@@ -1,4 +1,4 @@
 source 'https://supermarket.chef.io'
-cookbook 'wildfly', path: '../chef-wildfly'
+#cookbook 'wildfly', path: '../chef-wildfly'
 
 metadata
