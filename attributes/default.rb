@@ -22,9 +22,9 @@
 # => we are overwriting the necessary files with the files from the keycloak distribution
 
 # => source is changed to use keycloak instead of wildfly
-default['wildfly']['version'] = '2.4.0'
+default['wildfly']['version'] = '2.5.1'
 default['wildfly']['url'] = 'https://downloads.jboss.org/keycloak/2.4.0.Final/keycloak-2.4.0.Final.tar.gz'
-default['wildfly']['checksum'] = 'c30d8b2d934dd0bd2f7409a3e330ca54ecffc69897b2e1553d35973b72753409'
+default['wildfly']['checksum'] = '70c56676c0041dd3b6691e93c59fe8d64b9bd3677c4aeb0ed54027a1d43c686f'
 
 # => base directory
 default['wildfly']['base'] = '/opt/keycloak'
