@@ -89,4 +89,3 @@ default['wildfly']['extensions'] = {
   #  { "providers":  [{"name","com.mycompany.keycloak.extension"}, ..... ] },
   #  { "themes":  [{"name":"com.mycompany.keycloak.themes, ..... ] }
 }
-  
