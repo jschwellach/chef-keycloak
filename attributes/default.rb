@@ -83,3 +83,10 @@ default['wildfly']['int']['port_binding_offset'] = '0'
 default['wildfly']['aws']['s3_access_key'] = nil
 default['wildfly']['aws']['s3_secret_access_key'] = nil
 default['wildfly']['aws']['s3_bucket'] = nil
+
+# => List of Extensions to be Deployed to Keycloak
+default['wildfly']['extensions'] = {
+  #  { "providers":  [{"name","com.mycompany.keycloak.extension"}, ..... ] },
+  #  { "themes":  [{"name":"com.mycompany.keycloak.themes, ..... ] }
+}
+  
