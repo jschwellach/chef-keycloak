@@ -447,7 +447,7 @@
                 <default-provider>jpa</default-provider>
             </spi>
             <spi name="userCache">
-                <provider name="default" enabled="true"/>
+                <provider name="default" enabled="<%= node['keycloak']['usercache']['enabled'] %>"/>
             </spi>
             <spi name="userSessionPersister">
                 <default-provider>jpa</default-provider>
@@ -472,7 +472,7 @@
                 </provider>
             </spi>
             <spi name="realmCache">
-                <provider name="default" enabled="true"/>
+                <provider name="default" enabled="<%= node['keycloak']['realmcache']['enabled'] %>"/>
             </spi>
             <spi name="connectionsInfinispan">
                 <default-provider>default</default-provider>
