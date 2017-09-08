@@ -26,7 +26,9 @@ if node['wildfly']['mysql']['enabled'] == 'true' || node['wildfly']['mysql']['en
 end
 if node['wildfly']['postgresql']['enabled'] == 'true' || node['wildfly']['postgresql']['enabled'] == true
   include_recipe 'wildfly::postgres_connector'
-  include_recipe 'wildfly::postgres_datasources'
+  
+  #-ds.xml will be deprecated soon. Inject datasource in the Standalone XML using datasource attributes instead
+  #include_recipe 'wildfly::postgres_datasources'
 end
 
 unless node['wildfly']['mysql']['enabled'] == 'true' || node['wildfly']['mysql']['enabled'] == true || node['wildfly']['postgresql']['enabled'] == 'true' || node['wildfly']['postgresql']['enabled'] == true

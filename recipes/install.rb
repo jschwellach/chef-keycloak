@@ -26,7 +26,7 @@ include_recipe 'wildfly::install'
 begin
   r = resources(template: ::File.join(wildfly['base'], 'standalone', 'configuration', wildfly['sa']['conf']))
   r.cookbook 'keycloak'
-  r.source 'standalone-keycloak.xml.erb'
+  r.source "standalone-keycloak.xml.#{node['wildfly']['version']}.erb"
   r.mode '0755'
   r.variables(
     port_binding_offset: wildfly['int']['port_binding_offset'],

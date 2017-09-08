@@ -18,5 +18,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-default['keycloak']['usercache']['enabled'] = false
-default['keycloak']['realmcache']['enabled'] = false
+default['keycloak']['usercache']['enabled'] = true
+default['keycloak']['realmcache']['enabled'] = true
