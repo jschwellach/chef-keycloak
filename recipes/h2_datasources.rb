@@ -1,4 +1,5 @@
 # encoding: UTF-8
+
 #
 # Cookbook Name:: keycloak
 # Recipe:: h2_datasources
