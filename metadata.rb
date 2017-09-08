@@ -4,7 +4,7 @@ maintainer_email 'jschwellach@gmail.com'
 license          'Apache License, Version 2.0'
 description      'Installs/Configures keycloak'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '2.5.3'
+version          '3.2.1'
 
 supports 'centos', '>= 6.2'
 supports 'amazon', '>= 2016.09'
