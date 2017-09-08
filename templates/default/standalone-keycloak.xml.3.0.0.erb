@@ -134,16 +134,20 @@
                         <password>sa</password>
                     </security>
                 </datasource>
-                <!--
-                <datasource jndi-name="java:jboss/datasources/KeycloakDS" pool-name="KeycloakDS" enabled="true" use-java-context="true">
-                    <connection-url>jdbc:h2:${jboss.server.data.dir}/keycloak;AUTO_SERVER=TRUE</connection-url>
-                    <driver>h2</driver>
+                <%- node['wildfly']['postgresql']['jndi']['datasources'].each do |source|  %>
+                <datasource jta="false" jndi-name="<%= source['jndi_name'] %>" pool-name="<%= source['pool_name'] %>" enabled="true" use-java-context="true" use-ccm="true">
+                    <connection-url>jdbc:postgresql://<%= source['server'] %>:<%= source['port'] %>/<%= source['db_name'] %></connection-url>
+                    <driver>postgresql</driver>
+                    <pool>
+                        <min-pool-size><%= source['pool_min'] %></min-pool-size>
+                        <max-pool-size><%= source['pool_max'] %></max-pool-size>
+                    </pool>
                     <security>
-                        <user-name>sa</user-name>
-                        <password>sa</password>
+                        <user-name><%= source['db_user'] %></user-name>
+                        <password><%= source['db_pass'] %></password>
                     </security>
                 </datasource>
-                -->
+                <%- end %>
                 <drivers>
                     <driver name="h2" module="com.h2database.h2">
                         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>

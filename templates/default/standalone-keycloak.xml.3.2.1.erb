@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version='1.0' encoding='UTF-8'?>
 
 <server xmlns="urn:jboss:domain:4.0">
     <extensions>
@@ -25,13 +25,13 @@
         <extension module="org.wildfly.extension.security.manager"/>
         <extension module="org.wildfly.extension.undertow"/>
     </extensions>
-<% if !node['wildfly']['system_properties'].empty? -%>
+    <% if !node['wildfly']['system_properties'].empty? -%>
     <system-properties>
-  <% node['wildfly']['system_properties'].each do |property| -%>
+  	<% node['wildfly']['system_properties'].each do |property| -%>
         <property name="<%= property['name'] %>" value="<%= property['value'] %>"/>
-  <% end -%>
+  	<% end -%>
     </system-properties>
-<% end -%>
+	<% end -%>
     <management>
         <security-realms>
             <security-realm name="ManagementRealm">
@@ -120,9 +120,6 @@
                 <pattern-formatter pattern="%K{level}%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n"/>
             </formatter>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:deployment-scanner:2.0">
-            <deployment-scanner path="deployments" relative-to="jboss.server.base.dir" scan-interval="5000" deployment-timeout="1800" runtime-failure-causes-rollback="${jboss.deployment.scanner.rollback.on.failure:false}"/>
-        </subsystem>
         <subsystem xmlns="urn:jboss:domain:bean-validation:1.0"/>
         <subsystem xmlns="urn:jboss:domain:datasources:4.0">
             <datasources>
@@ -134,34 +131,41 @@
                         <password>sa</password>
                     </security>
                 </datasource>
-                <!--
-                <datasource jndi-name="java:jboss/datasources/KeycloakDS" pool-name="KeycloakDS" enabled="true" use-java-context="true">
-                    <connection-url>jdbc:h2:${jboss.server.data.dir}/keycloak;AUTO_SERVER=TRUE</connection-url>
-                    <driver>h2</driver>
+				<%- node['wildfly']['postgresql']['jndi']['datasources'].each do |source|  %>
+                <datasource jta="false" jndi-name="<%= source['jndi_name'] %>" pool-name="<%= source['pool_name'] %>" enabled="true" use-java-context="true" use-ccm="true">
+                    <connection-url>jdbc:postgresql://<%= source['server'] %>:<%= source['port'] %>/<%= source['db_name'] %></connection-url>
+                    <driver>postgresql</driver>
+                    <pool>
+                        <min-pool-size><%= source['pool_min'] %></min-pool-size>
+                        <max-pool-size><%= source['pool_max'] %></max-pool-size>
+                    </pool>
                     <security>
-                        <user-name>sa</user-name>
-                        <password>sa</password>
+                        <user-name><%= source['db_user'] %></user-name>
+                        <password><%= source['db_pass'] %></password>
                     </security>
                 </datasource>
-                -->
+                <%- end %>
                 <drivers>
                     <driver name="h2" module="com.h2database.h2">
                         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
                     </driver>
-            <%- if node['wildfly']['mysql']['enabled'] %>
+					<%- if node['wildfly']['mysql']['enabled'] %>
                     <driver name="mysql" module="com.mysql">
                         <driver-class>com.mysql.jdbc.Driver</driver-class>
                         <xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
                     </driver>
-            <%- end %>
-            <%- if node['wildfly']['postgresql']['enabled'] %>
+		            <%- end %>
+		            <%- if node['wildfly']['postgresql']['enabled'] %>
                     <driver name="postgresql" module="org.postgresql">
                         <driver-class>org.postgresql.Driver</driver-class>
                         <xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
                     </driver>
-            <%- end %>
+            		<%- end %>
                 </drivers>
             </datasources>
+        </subsystem>
+        <subsystem xmlns="urn:jboss:domain:deployment-scanner:2.0">
+            <deployment-scanner path="deployments" relative-to="jboss.server.base.dir" scan-interval="5000" runtime-failure-causes-rollback="${jboss.deployment.scanner.rollback.on.failure:false}"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:ee:4.0">
             <spec-descriptor-property-replacement>false</spec-descriptor-property-replacement>
@@ -230,19 +234,23 @@
                     <eviction max-entries="100000" strategy="LRU"/>
                 </local-cache>
                 <local-cache name="users">
-                    <eviction max-entries="100000" strategy="LRU" />
+                    <eviction max-entries="100000" strategy="LRU"/>
                 </local-cache>
-
                 <local-cache name="sessions"/>
+                <local-cache name="authenticationSessions"/>
                 <local-cache name="offlineSessions"/>
                 <local-cache name="loginFailures"/>
                 <local-cache name="work"/>
                 <local-cache name="authorization">
-                    <eviction max-entries="100" strategy="LRU"/>
+                    <eviction max-entries="10000" strategy="LRU"/>
                 </local-cache>
                 <local-cache name="keys">
                     <eviction max-entries="1000" strategy="LRU"/>
                     <expiration max-idle="3600000"/>
+                </local-cache>
+                <local-cache name="actionTokens">
+                    <eviction max-entries="-1" strategy="NONE"/>
+                    <expiration max-idle="-1" interval="300000"/>
                 </local-cache>
             </cache-container>
             <cache-container name="server" default-cache="default" module="org.wildfly.clustering.server">
@@ -269,17 +277,13 @@
                     <file-store passivation="true" purge="false"/>
                 </local-cache>
                 <local-cache name="persistent">
+                    <locking isolation="REPEATABLE_READ"/>
                     <transaction mode="BATCH"/>
                     <file-store passivation="false" purge="false"/>
                 </local-cache>
             </cache-container>
             <cache-container name="hibernate" default-cache="local-query" module="org.hibernate.infinispan">
                 <local-cache name="entity">
-                    <transaction mode="NON_XA"/>
-                    <eviction strategy="LRU" max-entries="10000"/>
-                    <expiration max-idle="100000"/>
-                </local-cache>
-                <local-cache name="immutable-entity">
                     <transaction mode="NON_XA"/>
                     <eviction strategy="LRU" max-entries="10000"/>
                     <expiration max-idle="100000"/>
@@ -396,7 +400,7 @@
         <subsystem xmlns="urn:jboss:domain:undertow:3.0">
             <buffer-cache name="default"/>
             <server name="default-server">
-            	<%- if node['wildfly']['ssl_forward'] == true %>
+                <%- if node['wildfly']['ssl_forward'] == true %>
                 <http-listener name="default" socket-binding="http" redirect-socket="https" proxy-address-forwarding="true"/>
             	<%- else %>
             	<http-listener name="default" socket-binding="http" redirect-socket="https"/>
@@ -433,7 +437,7 @@
                 <dir>${jboss.home.dir}/themes</dir>
             </theme>
             <spi name="eventsStore">
-                <default-provider>jpa</default-provider>
+            	<default-provider>jpa</default-provider>
                 <provider name="jpa" enabled="true">
                     <properties>
                         <property name="exclude-events" value="[&quot;REFRESH_TOKEN&quot;]"/>
@@ -453,9 +457,6 @@
                 <provider name="default" enabled="<%= node['keycloak']['usercache']['enabled'] %>"/>
             </spi>
             <spi name="userSessionPersister">
-                <default-provider>jpa</default-provider>
-            </spi>
-            <spi name="authorizationPersister">
                 <default-provider>jpa</default-provider>
             </spi>
             <spi name="timer">
@@ -512,13 +513,6 @@
           <% else %>
             <inet-address value="${jboss.bind.address:<%= @pub_int %>}"/>
           <% end %>
-        </interface>
-        <interface name="unsecure">
-            <!--
-              ~  Used for IIOP sockets in the standard configuration.
-              ~                  To secure JacORB you need to setup SSL 
-              -->
-            <inet-address value="${jboss.bind.address.unsecure:127.0.0.1}"/>
         </interface>
     </interfaces>
     <socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:<%= @port_binding_offset %>}">
