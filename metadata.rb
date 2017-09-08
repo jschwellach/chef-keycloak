@@ -1,7 +1,7 @@
 name             'keycloak'
 maintainer       'Janos Schwellach'
 maintainer_email 'jschwellach@gmail.com'
-license          'Apache License, Version 2.0'
+license 'Apache-2.0'
 description      'Installs/Configures keycloak'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '3.2.1'
