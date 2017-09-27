@@ -143,6 +143,14 @@
                         <user-name><%= source['db_user'] %></user-name>
                         <password><%= source['db_pass'] %></password>
                     </security>
+		    <validation>
+			<check-valid-connection-sql>select 1</check-valid-connection-sql>
+			<background-validation>true</background-validation>
+			<background-validation-millis>60000</background-validation-millis>
+		    </validation>
+		    <timeout>
+			<idle-timeout-minutes>30</idle-timeout-minutes>
+		    </timeout>
                 </datasource>
                 <%- end %>
                 <drivers>
