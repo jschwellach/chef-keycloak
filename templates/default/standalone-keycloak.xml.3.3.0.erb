@@ -139,7 +139,7 @@
                     </security>
                 </datasource>
                 <%- node['wildfly']['postgresql']['jndi']['datasources'].each do |source|  %>
-                <datasource jta="false" jndi-name="<%= source['jndi_name'] %>" pool-name="<%= source['pool_name'] %>" enabled="true" use-java-context="true" use-ccm="true">
+                <datasource jndi-name="<%= source['jndi_name'] %>" pool-name="<%= source['pool_name'] %>" enabled="true" use-java-context="true">
                     <connection-url>jdbc:postgresql://<%= source['server'] %>:<%= source['port'] %>/<%= source['db_name'] %></connection-url>
                     <driver>postgresql</driver>
                     <pool>
@@ -512,8 +512,11 @@
         <subsystem xmlns="urn:jboss:domain:undertow:4.0">
             <buffer-cache name="default"/>
             <server name="default-server">
-                <http-listener name="default" socket-binding="http" redirect-socket="https" enable-http2="true"/>
-                <https-listener name="https" socket-binding="https" security-realm="ApplicationRealm" enable-http2="true"/>
+                <%- if node['wildfly']['ssl_forward'] == true %>
+                <http-listener name="default" socket-binding="http" redirect-socket="https" proxy-address-forwarding="true"/>
+            	<%- else %>
+            	<http-listener name="default" socket-binding="http" redirect-socket="https"/>
+            	<%- end %>
                 <host name="default-host" alias="localhost">
                     <location name="/" handler="welcome-content"/>
                     <filter-ref name="server-header"/>
