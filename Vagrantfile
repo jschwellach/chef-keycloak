@@ -18,9 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #
   #   $ vagrant plugin install vagrant-omnibus
   #
-  if Vagrant.has_plugin?('vagrant-omnibus')
-    config.omnibus.chef_version = 'latest'
-  end
+  config.omnibus.chef_version = 'latest' if Vagrant.has_plugin?('vagrant-omnibus')
 
   # Every Vagrant virtual environment requires a box to build off of.
   # If this value is a shorthand to a box in Vagrant Cloud then
