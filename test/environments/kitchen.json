@@ -1,0 +1,179 @@
+{
+  "name": "kitchen",
+  "description": "My Chef environment",
+  "cookbook_versions": {},
+  "json_class": "Chef::Environment",
+  "chef_type": "environment",
+  "default_attributes": {
+    "chef_client": {
+      "interval": 300,
+      "splay": 60
+    }
+  },
+  "override_attributes": {
+    "wildfly": {
+			"postgresql":{
+				"jndi":{
+					"datasources":{
+						"jndi_name" : "",
+						"server" : "localhost",
+						"port" : "5432",
+						"db_name" : "keycloak",
+						"db_user" : "keycloak",
+						"db_pass" : "password",
+						"pool_name" : "KeycloakDS",
+						"pool_min" : 5,
+						"pool_max" : 20
+					}
+				}
+			},
+      "users": {
+        "app": [
+          {
+            "id": "wildfly",
+            "passhash": "2208721dcb340fdac4a16eeb7e2741fe"
+          }
+        ],
+        "mgmt": [
+          {
+            "id": "wildfly",
+            "passhash": "2208721dcb340fdac4a16eeb7e2741fe"
+          }
+        ]
+      },
+      "system_properties": [
+        {
+          "name": "REALM_ID_LOOKUP_CLIENT_ID",
+          "value": "private-access"
+        },
+        {
+          "name": "REALM_ID_LOOKUP_CLIENT_SECRET",
+          "value": "36b17517-0c22-4f66-905c-debab1eee4f8"
+        },
+        {
+          "name": "REALM_ID_LOOKUP_KEYCLOAK_BASE_URL",
+          "value": "http://localhost:8080/auth"
+        },
+        {
+          "name": "IAM_URL",
+          "value": "https://iam-admin.helix-playground.net"
+        },
+        {
+          "name": "DNA_URL",
+          "value": "https://%s.helixleisure.net"
+        },
+        {
+          "name": "INSIGHT_URL",
+          "value": "https://insight-dev.helix-playground.net"
+        },
+        {
+          "name": "jboss.as.management.blocking.timeout",
+          "value": "1800"
+        },
+        {
+          "name": "USER_DISCOVERY_X_API_KEY",
+          "value": "HYWRJptzBL3ykokzAWbAY4nRZ5NO2Z7I7VzQLq3h"
+        },
+        {
+          "name": "USER_DISCOVERY_API_URL",
+          "value": "https://ld-us.helix-playground.net/login-discovery"
+        },
+        {
+          "name": "MAIN_TOKEN_ISSUER",
+          "value": "https://iam-sg-01.helix-playground.net/auth/realms/master"
+        },
+        {
+          "name": "LOGIN_LOOKUP_BASE_URL",
+          "value": "https://login.helix-playground.net"
+        },
+        {
+          "name": "OPERATOR_LOOKUP_API_URL",
+          "value": "https://od-us.helix-playground.net/operator"
+        },
+        {
+          "name": "REGION",
+          "value": "us-east-1"
+        },
+        {
+          "name": "SHARD_NAME",
+          "value": "iam-sg-01"
+        },
+        {
+          "name": "SHARD_URL",
+          "value": "https://iam-sg-01.helix-playground.net/auth"
+        },
+        {
+          "name": "DISCOVERY_SERVICE_URL",
+          "value": "https://ds-us.helix-playground.net/catalog"
+        },
+        {
+          "name": "DISCOVERY_SERVICE_REGION",
+          "value": "us-east-1"
+        },
+        {
+          "name": "DISCOVERY_SERVICE_REGISTER_PATH",
+          "value": "/register"
+        },
+        {
+          "name": "PRODUCT_API_ENDPOINT",
+          "value": "https://products-us.helix-playground.net/v1"
+        },
+        {
+          "name": "CLAIM_SERVICE_API_URL",
+          "value": "https://cs-us.helix-playground.net/claims/"
+        },
+        {
+          "name": "CLAIM_SERVICE_API_VERSION",
+          "value": "1.0.0"
+        },
+        {
+          "name": "PROFILE_URL",
+          "value": "https://profile.helix-playground.net"
+        }
+      ],
+      "version": "3.4.0",
+      "checksum": "113658ea6627ae45eab762d06366a717b5c3b64033f226355d3f094c943b916d",
+      "checksum_321": "1a0095d39b5ca5805a81d59cf4700333c52f8da45a0de0c7799c582d71881a5b",
+      "checksum_300": "012abb8863f3ca2722e88658b49ef4a77f63b66702aaa0b546b65bce5944b9ef",
+      "checksum_340": "113658ea6627ae45eab762d06366a717b5c3b64033f226355d3f094c943b916d",
+      "mysql": {
+        "enabled": false
+      },
+      "postgresql": {
+        "enabled": true
+      },
+      "checksum330": "ad3fdab5c1a22b101812c80165ec8414b9fd6a491097836b6e29e11eb7727965"
+    },
+    "keycloak": {
+      "force_install": true,
+      "enforce_module_update": true
+    },
+    "java": {
+      "jdk": {
+        "8": {
+          "x86_64": {
+            "checksum": "79a3f25e9b466cb9e969d1772ea38550de320c88e9119bf8aa11ce8547c39987",
+            "url": "http://static.helixleisure.net/installer/java/8/jdk-8u92-linux-x64.tar.gz"
+          },
+          "i586": {
+            "url": "http://static.helixleisure.net/installer/java/8/jdk-8u92-linux-i586.tar.gz",
+            "checksum": "7203592329877735bb6259844a3a30640edc61920d132f952c40ab2e2014b224"
+          }
+        }
+      },
+      "install_flavor": "oracle"
+    },
+    "helix_users": {
+      "groups": [
+        "architects",
+        "sysadmin",
+        "wheel",
+        "helix"
+      ],
+      "data_bags": [
+        "architects",
+        "dev-users"
+      ]
+    }
+  }
+}

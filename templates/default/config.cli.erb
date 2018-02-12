@@ -1,0 +1,45 @@
+# Mark the commands below to be run as a batch
+batch
+
+# Add system_properties configuration for mdb
+<% if !node['wildfly']['system_properties'].empty? -%>
+  <% node['wildfly']['system_properties'].each do |property| -%>
+if (outcome != success) of /system-property=<%= property['name'] %>:read-resource
+    /system-property=<%= property['name'] %>:add(value=<%= property['value'] %>)
+else
+    /system-property=<%= property['name'] %>:remove
+    /system-property=<%= property['name'] %>:add(value=<%= property['value'] %>)
+end-if
+  <% end -%>
+<% end -%>
+
+# Add mysql driver
+<%- if node['wildfly']['mysql']['enabled'] %>
+/subsystem=datasources/jdbc-driver=mysql:add(driver-name="mysql",driver-module-name="com.mysql",driver-class-name=com.mysql.jdbc.Driver,driver-xa-datasource-class-name=com.mysql.jdbc.jdbc2.optional.MysqlXADataSource)
+<%- end %>
+
+# Add postgres driver
+<%- if node['wildfly']['postgresql']['enabled'] %>
+/subsystem=datasources/jdbc-driver=postgres:add(driver-name="postgres",driver-module-name="org.postgres",driver-class-name=org.postgresql.Driver,driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
+<%- end %>
+
+#Remove UNUsed datasource
+if (outcome == success) of /subsystem=datasources/data-source=ExampleDS:read-resource
+  /subsystem=datasources/data-source=ExampleDS:remove
+end-if
+
+# Add the datasource
+<%- node['wildfly']['postgresql']['jndi']['datasources'].each do |source|  %>
+if (outcome != success) of /subsystem=datasources/data-source=<%= source['pool_name'] %>:read-resource
+  data-source add --name=<%= source['pool_name'] %> --driver-name=postgres --jndi-name=<%= source['jndi_name'] %> --connection-url=jdbc:postgresql://<%= source['server'] %>:<%= source['port'] %>/<%= source['db_name'] %> --user-name=<%= source['db_user'] %> --password=<%= source['db_pass'] %> --use-ccm=true --max-pool-size=<%= source['pool_max'] %> --blocking-timeout-wait-millis=5000 --enabled=true --driver-class=org.postgresql.Driver --exception-sorter-class-name=org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter --jta=true --use-java-context=true --valid-connection-checker-class-name=org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker
+else
+  /subsystem=datasources/data-source=<%= source['pool_name'] %>:remove
+  data-source add --name=<%= source['pool_name'] %> --driver-name=postgres --jndi-name=<%= source['jndi_name'] %> --connection-url=jdbc:postgresql://<%= source['server'] %>:<%= source['port'] %>/<%= source['db_name'] %> --user-name=<%= source['db_user'] %> --password=<%= source['db_pass'] %> --use-ccm=true --max-pool-size=<%= source['pool_max'] %> --blocking-timeout-wait-millis=5000 --enabled=true --driver-class=org.postgresql.Driver --exception-sorter-class-name=org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter --jta=true --use-java-context=true --valid-connection-checker-class-name=org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker
+end-if
+<%- end %>
+
+# Execute the batch
+run-batch
+
+# Reload the server configuration
+#:reload
