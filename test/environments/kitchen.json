@@ -15,7 +15,7 @@
 			"postgresql":{
 				"jndi":{
 					"datasources":{
-						"jndi_name" : "",
+						"jndi_name" : "java:jboss/datasources/KeycloakDS",
 						"server" : "localhost",
 						"port" : "5432",
 						"db_name" : "keycloak",
