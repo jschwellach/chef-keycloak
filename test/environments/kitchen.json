@@ -12,21 +12,6 @@
   },
   "override_attributes": {
     "wildfly": {
-			"postgresql":{
-				"jndi":{
-					"datasources":{
-						"jndi_name" : "java:jboss/datasources/KeycloakDS",
-						"server" : "localhost",
-						"port" : "5432",
-						"db_name" : "keycloak",
-						"db_user" : "keycloak",
-						"db_pass" : "password",
-						"pool_name" : "KeycloakDS",
-						"pool_min" : 5,
-						"pool_max" : 20
-					}
-				}
-			},
       "users": {
         "app": [
           {
@@ -140,7 +125,21 @@
         "enabled": false
       },
       "postgresql": {
-        "enabled": true
+        "enabled": true,
+        "jndi": {
+          "datasources": [{
+	            "jndi_name": "java:jboss/datasources/KeycloakDS",
+	            "server": "10.1.1.219",
+	            "port": "5432",
+	            "db_name": "keycloak",
+	            "db_user": "keycloak",
+	            "db_pass": "password",
+	            "pool_name": "KeycloakDS",
+	            "pool_min": 5,
+	            "pool_max": 20
+            }
+				  ]
+        }
       },
       "checksum330": "ad3fdab5c1a22b101812c80165ec8414b9fd6a491097836b6e29e11eb7727965"
     },
