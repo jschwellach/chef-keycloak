@@ -12,17 +12,20 @@
   },
   "override_attributes": {
     "wildfly": {
+      "sa" : {
+        "conf" : "standalone.xml"
+      },
       "users": {
         "app": [
           {
-            "id": "wildfly",
-            "passhash": "2208721dcb340fdac4a16eeb7e2741fe"
+            "id": "keycloak",
+            "passhash": "e3deb717efeff956c5481df359972695"
           }
         ],
         "mgmt": [
           {
-            "id": "wildfly",
-            "passhash": "2208721dcb340fdac4a16eeb7e2741fe"
+            "id": "keycloak",
+            "passhash": "e3deb717efeff956c5481df359972695"
           }
         ]
       },
@@ -116,11 +119,8 @@
           "value": "https://profile.helix-playground.net"
         }
       ],
-      "version": "3.4.0",
-      "checksum": "113658ea6627ae45eab762d06366a717b5c3b64033f226355d3f094c943b916d",
-      "checksum_321": "1a0095d39b5ca5805a81d59cf4700333c52f8da45a0de0c7799c582d71881a5b",
-      "checksum_300": "012abb8863f3ca2722e88658b49ef4a77f63b66702aaa0b546b65bce5944b9ef",
-      "checksum_340": "113658ea6627ae45eab762d06366a717b5c3b64033f226355d3f094c943b916d",
+      "version": "3.4.3",
+      "checksum": "c75a6a859173ec7f7566ab64f6edb5bac13908863abda42fc556aba775dca3d2",
       "mysql": {
         "enabled": false
       },
@@ -140,8 +140,7 @@
             }
 				  ]
         }
-      },
-      "checksum330": "ad3fdab5c1a22b101812c80165ec8414b9fd6a491097836b6e29e11eb7727965"
+      }
     },
     "keycloak": {
       "force_install": true,

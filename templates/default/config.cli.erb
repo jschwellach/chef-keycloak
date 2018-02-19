@@ -38,6 +38,28 @@ else
 end-if
 <%- end %>
 
+<%- if node['wildfly']['int']['mgmt']['bind'] == '0.0.0.0' %>
+/interface=management:write-attribute(name=any-address)
+<%- end %>
+
+<%- if node['wildfly']['int']['pub']['bind'] == '0.0.0.0' %>
+/interface=public:write-attribute(name=any-address)
+<%- end %>
+
+# Add the email
+/subsystem=mail/mail-session=default/server=smtp/:write-attribute(name=username,value=<%= node['wildfly']['smtp']['username'] %>)
+/subsystem=mail/mail-session=default/server=smtp/:write-attribute(name=password,value=<%= node['wildfly']['smtp']['password'] %>)
+/subsystem=mail/mail-session=default/server=smtp/:write-attribute(name=ssl,value=<%= node['wildfly']['smtp']['ssl'] %>)
+
+/socket-binding-group=standard-sockets/socket-binding=management-http:write-attribute(name=port,value=<%= node['wildfly']['int']['mgmt']['http_port'] %>)
+/socket-binding-group=standard-sockets/socket-binding=management-https:write-attribute(name=port,value=<%= node['wildfly']['int']['mgmt']['https_port'] %>)
+/socket-binding-group=standard-sockets/socket-binding=ajp:write-attribute(name=port,value=<%= node['wildfly']['int']['ajp']['port'] %>)
+/socket-binding-group=standard-sockets/socket-binding=http:write-attribute(name=port,value=<%= node['wildfly']['int']['pub']['http_port'] %>)
+/socket-binding-group=standard-sockets/socket-binding=https:write-attribute(name=port,value=<%= node['wildfly']['int']['pub']['https_port'] %>)
+
+/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp/:write-attribute(name=host,value=<%= node['wildfly']['smtp']['host'] %>)
+/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp/:write-attribute(name=port,value=<%= node['wildfly']['smtp']['port'] %>)
+
 # Execute the batch
 run-batch
 

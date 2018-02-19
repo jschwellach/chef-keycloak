@@ -1,7 +1,11 @@
 DEPENDENCIES
+  apt (~> 6.1.4)
+  java (~> 1.50.0)
   keycloak
     path: .
     metadata: true
+  wildfly (~> 0.4.3)
+  yum (~> 5.1.0)
 
 GRAPH
   apt (6.1.4)
@@ -12,10 +16,10 @@ GRAPH
     windows (>= 0.0.0)
   keycloak (3.4.1)
     apt (>= 0.0.0)
-    java (~> 1.22)
-    wildfly (~> 0.4.0)
+    java (~> 1.50.0)
+    wildfly (~> 0.4.3)
     yum (>= 0.0.0)
-  ohai (5.2.1)
+  ohai (5.2.2)
   wildfly (0.4.3)
     apt (>= 0.0.0)
     java (~> 1.22)

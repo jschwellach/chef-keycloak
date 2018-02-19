@@ -42,18 +42,12 @@ default['wildfly']['install_java'] = true
 # => Based on value of node['java']['java_home']
 default['wildfly']['java']['enforce_java_home'] = true
 
-# => enable postgresql
-default['wildfly']['postgresql']['enabled'] = false
-
-# => enable mysql
-default['wildfly']['mysql']['enabled'] = false
-
 # => configure the deployment mode (standalone or domain).
 # => This will affect the configuration files below
 default['wildfly']['mode'] = 'standalone'
 
 # => this is just for the wildfly recipe and will be overwritten by this cookbook in keycloak::configuration
-default['wildfly']['sa']['conf'] = 'standalone.xml'
+default['wildfly']['sa']['conf'] = 'standalone-full.xml'
 
 # => SMTP Settings
 default['wildfly']['smtp']['host'] = 'localhost'
