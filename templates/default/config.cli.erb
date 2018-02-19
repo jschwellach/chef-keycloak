@@ -38,12 +38,13 @@ else
 end-if
 <%- end %>
 
+# Need to find a way to delete inet-address
 <%- if node['wildfly']['int']['mgmt']['bind'] == '0.0.0.0' %>
-/interface=management:write-attribute(name=any-address)
+/interface=management:write-attribute(name=any-address, value=true)
 <%- end %>
 
 <%- if node['wildfly']['int']['pub']['bind'] == '0.0.0.0' %>
-/interface=public:write-attribute(name=any-address)
+/interface=public:write-attribute(name=any-address, value=true)
 <%- end %>
 
 # Add the email
