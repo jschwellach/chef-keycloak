@@ -19,3 +19,6 @@
 
 default['keycloak']['usercache']['enabled'] = true
 default['keycloak']['realmcache']['enabled'] = true
+
+# This attribute if enabled will make use of the
+default['keycloak']['config']['enabled'] = true

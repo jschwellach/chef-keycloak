@@ -53,11 +53,3 @@ begin
 rescue Chef::Exceptions::ResourceNotFound
   Chef::Log.warn 'could not find template to override!'
 end
-
-template ::File.join(wildfly['base'], 'standalone', 'configuration', 'wildfly-configuration.cli') do
-  source 'config.cli.erb'
-  user wildfly['user']
-  group wildfly['group']
-  mode '0600'
-  action :create
-end

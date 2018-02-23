@@ -14,7 +14,7 @@ GRAPH
     apt (>= 0.0.0)
     homebrew (>= 0.0.0)
     windows (>= 0.0.0)
-  keycloak (3.4.1)
+  keycloak (3.4.3)
     apt (>= 0.0.0)
     java (~> 1.50.0)
     wildfly (~> 0.4.3)
