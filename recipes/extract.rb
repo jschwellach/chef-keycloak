@@ -18,7 +18,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 #
 # This recipe will install keycloak without doing template configuration.
 # It will make use of keycloak's standalone.xml or standalone-ha.xml
@@ -44,7 +43,7 @@ user wildfly['user'] do
   home wildfly['base']
   shell '/sbin/nologin'
   system true
-  action [:create, :lock]
+  action %i[create lock]
 end
 
 # => Create Wildfly Group
@@ -86,11 +85,11 @@ end
 # => Extract Keycloak
 bash 'Extract Keycloak' do
   cwd Chef::Config[:file_cache_path]
-  code <<-EOF
-  tar xzf #{wildfly['version']}.tar.gz -C #{wildfly['base']} --strip 1
-  chown #{wildfly['user']}:#{wildfly['group']} -R #{wildfly['base']}
-  rm -f #{::File.join(wildfly['base'], '.chef_deployed')}
-  EOF
+  code <<-XTRCT
+    tar xzf #{wildfly['version']}.tar.gz -C #{wildfly['base']} --strip 1
+    chown #{wildfly['user']}:#{wildfly['group']} -R #{wildfly['base']}
+    rm -f #{::File.join(wildfly['base'], '.chef_deployed')}
+    XTRCT
   action :nothing
 end
 
@@ -149,5 +148,5 @@ end
 
 # => Start the Wildfly Service
 service wildfly['service'] do
-  action [:enable, :start]
+  action %i[enable start]
 end

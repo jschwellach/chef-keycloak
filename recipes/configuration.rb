@@ -18,7 +18,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 #
 # This recipe will configure server using Jboss Client Console
 #
@@ -34,7 +33,7 @@ directory "#{wildfly['base']}/client" do
   recursive true
 end
 
-client_command=::File.join(wildfly['base'], 'client', 'wildfly-configuration.cli')
+client_command = ::File.join(wildfly['base'], 'client', 'wildfly-configuration.cli')
 
 template client_command do
   source 'config.cli.erb'
