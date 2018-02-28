@@ -33,17 +33,28 @@ directory "#{wildfly['base']}/client" do
   recursive true
 end
 
-client_command = ::File.join(wildfly['base'], 'client', 'wildfly-configuration.cli')
-
-template client_command do
-  source 'config.cli.erb'
-  user wildfly['user']
-  group wildfly['group']
-  mode '0600'
-  action :create
-end
-
-execute 'configure_keycloak' do
-  command "#{node['wildfly']['base']}/bin/jboss-cli.sh  --file=#{client_command}"
-  ignore_failure true
+# Loop at all Client Sources
+node['keycloak']['config']['clients'].each do |clients|
+  clients.each do |name, attribs|
+    attribs.each do |attrib|
+      attrib.each do |key, value|
+        next unless key == 'source'
+        command = ::File.join(wildfly['base'], 'client', "keycloak-#{name}.cli")
+        template command do
+          source "#{value}"
+          user wildfly['user']
+          group wildfly['group']
+          mode '0600'
+          action :create
+          notifies :run, "execute[configure_#{name}]", :immediately
+        end
+        execute "configure_#{name}" do
+          command "#{node['wildfly']['base']}/bin/jboss-cli.sh --connect --file=#{command}"
+          ignore_failure true
+          action :nothing
+          notifies :restart, "service[#{wildfly['service']}]", :delayed
+        end
+      end
+    end
+  end
 end

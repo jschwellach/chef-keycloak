@@ -19,13 +19,13 @@
         "app": [
           {
             "id": "keycloak",
-            "passhash": "e3deb717efeff956c5481df359972695"
+            "passhash": "$1$JD62K5kF$2d4JbcXrO3dMSxF7346q./"
           }
         ],
         "mgmt": [
           {
             "id": "keycloak",
-            "passhash": "e3deb717efeff956c5481df359972695"
+            "passhash": "$1$JD62K5kF$2d4JbcXrO3dMSxF7346q./"
           }
         ]
       },
@@ -129,7 +129,7 @@
         "jndi": {
           "datasources": [{
 	            "jndi_name": "java:jboss/datasources/KeycloakDS",
-	            "server": "10.1.1.219",
+	            "server": "172.17.0.1",
 	            "port": "5432",
 	            "db_name": "keycloak",
 	            "db_user": "keycloak",

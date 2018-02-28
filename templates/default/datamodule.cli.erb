@@ -1,0 +1,14 @@
+batch
+
+# Add mysql driver
+<%- if node['wildfly']['mysql']['enabled'] %>
+/subsystem=datasources/jdbc-driver=mysql:add(driver-name="mysql",driver-module-name="com.mysql",driver-class-name=com.mysql.jdbc.Driver,driver-xa-datasource-class-name=com.mysql.jdbc.jdbc2.optional.MysqlXADataSource)
+<%- end %>
+
+# Add postgres driver
+<%- if node['wildfly']['postgresql']['enabled'] %>
+/subsystem=datasources/jdbc-driver=postgres:add(driver-name="postgres",driver-module-name="org.postgresql",driver-class-name=org.postgresql.Driver,driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
+<%- end %>
+
+# Execute the batch
+run-batch

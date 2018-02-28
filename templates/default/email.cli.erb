@@ -1,0 +1,25 @@
+# Email configuration
+batch
+
+# Add the email
+
+/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp/:write-attribute(name=host,value=<%= node['wildfly']['smtp']['host'] %>)
+/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp/:write-attribute(name=port,value=<%= node['wildfly']['smtp']['port'] %>)
+/subsystem=mail/mail-session=default/server=smtp/:remove
+
+<%- if node['wildfly']['smtp']['ssl'] && ((node['wildfly']['smtp']['username'].nil? || node['wildfly']['smtp']['username'].empty?) && (node['wildfly']['smtp']['password'].nil? || node['wildfly']['smtp']['password'].empty?)) %>
+/subsystem=mail/mail-session=default/server=smtp/:add(outbound-socket-binding-ref=mail-smtp, ssl=<%= node['wildfly']['smtp']['ssl'] %>)
+<%- elsif node['wildfly']['smtp']['ssl'] && (!(node['wildfly']['smtp']['username'].nil? || node['wildfly']['smtp']['username'].empty?) && (node['wildfly']['smtp']['password'].nil? || node['wildfly']['smtp']['password'].empty?))  %>
+/subsystem=mail/mail-session=default/server=smtp/:add(outbound-socket-binding-ref=mail-smtp, ssl=<%= node['wildfly']['smtp']['ssl'] %>, username=<%= node['wildfly']['smtp']['username'] %>)
+<%- elsif node['wildfly']['smtp']['ssl'] %>
+/subsystem=mail/mail-session=default/server=smtp/:add(outbound-socket-binding-ref=mail-smtp, ssl=<%= node['wildfly']['smtp']['ssl'] %>, username=<%= node['wildfly']['smtp']['username'] %>, password=<%= node['wildfly']['smtp']['password'] %>)
+<%- elsif (node['wildfly']['smtp']['username'].nil? || node['wildfly']['smtp']['username'].empty?) && (node['wildfly']['smtp']['password'].nil? || node['wildfly']['smtp']['password'].empty?) %>
+/subsystem=mail/mail-session=default/server=smtp/:add(outbound-socket-binding-ref=mail-smtp)
+<%- elsif (!(node['wildfly']['smtp']['username'].nil? || node['wildfly']['smtp']['username'].empty?) && (node['wildfly']['smtp']['password'].nil? || node['wildfly']['smtp']['password'].empty?)) %>
+/subsystem=mail/mail-session=default/server=smtp/:add(outbound-socket-binding-ref=mail-smtp, username=<%= node['wildfly']['smtp']['username'] %>)
+<%- else %>
+/subsystem=mail/mail-session=default/server=smtp/:add(outbound-socket-binding-ref=mail-smtp, username=<%= node['wildfly']['smtp']['username'] %>, password=<%= node['wildfly']['smtp']['password'] %>)
+<%- end %>
+
+# Execute the batch
+run-batch

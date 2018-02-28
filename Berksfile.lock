@@ -24,6 +24,6 @@ GRAPH
     apt (>= 0.0.0)
     java (~> 1.22)
     yum (>= 0.0.0)
-  windows (3.4.4)
+  windows (3.5.1)
     ohai (>= 4.0.0)
   yum (5.1.0)

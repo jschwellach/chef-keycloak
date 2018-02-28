@@ -1,0 +1,21 @@
+# Email configuration
+batch
+
+# Need to find a way to delete inet-address
+
+/interface=management/:remove
+<%- if node['wildfly']['int']['mgmt']['bind'] == '0.0.0.0' %>
+/interface=management/:add(any-address)
+<%- else %>
+/interface=management/:add(inet-address="${jboss.bind.address.management:<%= node['wildfly']['int']['pub']['bind'] %>}")
+<%- end %>
+
+/interface=public/:remove
+<%- if node['wildfly']['int']['pub']['bind'] == '0.0.0.0' %>
+/interface=public/:add(any-address)
+<%- else %>
+/interface=management/:add(inet-address="${jboss.bind.address.management:<%= node['wildfly']['int']['pub']['bind'] %>}")
+<%- end %>
+
+# Execute the batch
+run-batch
