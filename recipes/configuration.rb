@@ -49,6 +49,7 @@ node['keycloak']['config']['clients'].each do |clients|
           notifies :run, "execute[configure_#{name}]", :immediately
         end
         execute "configure_#{name}" do
+          user 'root'
           command "#{node['wildfly']['base']}/bin/jboss-cli.sh --connect --file=#{command}"
           ignore_failure true
           action :nothing

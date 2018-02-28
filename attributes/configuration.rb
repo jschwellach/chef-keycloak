@@ -36,5 +36,11 @@ default['keycloak']['config']['clients'] = [
   ],
   interfaces: [
     source: 'interfaces.cli.erb'
+  ],
+  infinispan: [
+    source: 'infinispan.cli.erb'
+  ],
+  keycloakserver: [
+    source: 'keycloak-server.cli.erb'
   ]
 ]
