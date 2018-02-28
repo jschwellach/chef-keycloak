@@ -22,6 +22,7 @@ wildfly = node['wildfly']
 
 include_recipe 'wildfly::install'
 
+# TODO: This needs to be replaced by JBOSS_CLI --connect -c wildfly-configuration.cli
 begin
   r = resources(template: ::File.join(wildfly['base'], 'standalone', 'configuration', wildfly['sa']['conf']))
   r.cookbook 'keycloak'

@@ -1,0 +1,17 @@
+{
+  "id": "default-centos-72",
+  "chef_environment": "kitchen",
+  "automatic": {
+    "ipaddress": "172.28.128.3",
+    "platform": "centos",
+    "fqdn": "default-centos-72.vagrantup.com",
+    "recipes": [
+      "keycloak::default"
+    ]
+  },
+  "normal": {
+  },
+  "run_list": [
+    "recipe[keycloak::default]"
+  ]
+}

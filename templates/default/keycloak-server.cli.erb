@@ -1,0 +1,9 @@
+# Infispan configuration
+batch
+
+/subsystem=keycloak-server/spi=userCache/provider=default:write-attribute(name=enabled, value=<%= node['keycloak']['usercache']['enabled'] %>)
+
+/subsystem=keycloak-server/spi=realmCache/provider=default:write-attribute(name=enabled, value=<%= node['keycloak']['realmcache']['enabled'] %>)
+
+# Execute the batch
+run-batch

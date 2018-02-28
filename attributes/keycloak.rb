@@ -19,3 +19,10 @@
 
 default['keycloak']['usercache']['enabled'] = true
 default['keycloak']['realmcache']['enabled'] = true
+
+# This attribute if enabled will make use of the
+default['keycloak']['config']['enabled'] = true
+
+# infinispan realms and users max-entries
+default['keycloak']['realms']['max'] = 100_000
+default['keycloak']['users']['max'] = 100_000

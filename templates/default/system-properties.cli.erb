@@ -1,0 +1,13 @@
+# Conditional Client Calls can't be run as BATCH
+
+# Add system_properties configuration for mdb
+<% if !node['wildfly']['system_properties'].empty? -%>
+  <% node['wildfly']['system_properties'].each do |property| -%>
+if (outcome != success) of /system-property=<%= property['name'] %>:read-resource
+    /system-property=<%= property['name'] %>:add(value=<%= property['value'] %>)
+else
+    /system-property=<%= property['name'] %>:remove
+    /system-property=<%= property['name'] %>:add(value=<%= property['value'] %>)
+end-if
+  <% end -%>
+<% end -%>

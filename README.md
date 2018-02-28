@@ -18,9 +18,10 @@ Tested on:
 - Amazon Linux
 
 # Usage
-Please refer to the underlying Wildfly cookbook for all parameters. 
+Please refer to the underlying Wildfly cookbook for all parameters.
 This cookbook overwrites the template used in the Wildfly cookbook to use the configuration coming from Keycloak
 
 
 # Authors
 Author:: Janos Schwellach
+Author:: Rodel M. Talampas
