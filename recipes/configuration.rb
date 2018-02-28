@@ -41,7 +41,7 @@ node['keycloak']['config']['clients'].each do |clients|
         next unless key == 'source'
         command = ::File.join(wildfly['base'], 'client', "keycloak-#{name}.cli")
         template command do
-          source "#{value}"
+          source value.to_s
           user wildfly['user']
           group wildfly['group']
           mode '0600'
