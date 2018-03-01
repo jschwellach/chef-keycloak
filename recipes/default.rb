@@ -19,13 +19,7 @@
 
 include_recipe 'java' if node['wildfly']['install_java']
 include_recipe 'keycloak::install'
-
-include_recipe 'wildfly::mysql_connector' if node['wildfly']['mysql']['enabled'] == 'true' || node['wildfly']['mysql']['enabled'] == true
-
-if node['wildfly']['postgresql']['enabled'] == 'true' || node['wildfly']['postgresql']['enabled'] == true
-  include_recipe 'wildfly::postgres_connector'
-  # -ds.xml will be deprecated soon. Inject datasource in the Standalone XML using datasource attributes instead
-  # include_recipe 'wildfly::postgres_datasources'
-end
+include_recipe 'wildfly::mysql_connector' if node['wildfly']['mysql']['enabled']
+include_recipe 'wildfly::postgres_connector' if node['wildfly']['postgresql']['enabled']
 
 include_recipe 'keycloak::h2_datasources' unless node['wildfly']['mysql']['enabled'] == 'true' || node['wildfly']['mysql']['enabled'] == true || node['wildfly']['postgresql']['enabled'] == 'true' || node['wildfly']['postgresql']['enabled'] == true

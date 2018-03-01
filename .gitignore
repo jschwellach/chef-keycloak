@@ -9,3 +9,7 @@ bin/*
 .kitchen.local.yml
 .project
 /Gemfile.lock
+
+**/kitchen*.json
+
+/test/**

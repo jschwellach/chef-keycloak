@@ -16,13 +16,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# => PostgreSQL Database Configuration
-# => PostgreSQL driver
-default['wildfly']['postgresql']['enabled'] = true
-default['wildfly']['postgresql']['url'] = 'http://central.maven.org/maven2/org/postgresql/postgresql/9.4-1206-jdbc41/postgresql-9.4-1206-jdbc41.jar'
-default['wildfly']['postgresql']['checksum'] = '45b828279515802c842861cf4abbe36115c493e9e5c82916dade6dd28b84a824'
+# => PostgreSQL Driver
+default['wildfly']['postgresql'].tap do |postgresql|
+  postgresql['enabled'] = true
+  postgresql['url'] = 'https://jdbc.postgresql.org/download/postgresql-42.1.4.jar'
+  postgresql['checksum'] = '4523ed32e9245e762e1df9f0942a147bece06561770a9195db093d9802297735'
 
-# => PostgreSQL driver JDBC Module Name
-default['wildfly']['postgresql']['mod_name'] = 'org.postgresql'
-# => PostgreSQL driver Module Dependencies
-default['wildfly']['postgresql']['mod_deps'] = ['javax.api', 'javax.transaction.api']
+  # => PostgreSQL driver JDBC Module Name
+  postgresql['mod_name'] = 'org.postgresql'
+  # => PostgreSQL driver Module Dependencies
+  postgresql['mod_deps'] = ['javax.api', 'javax.transaction.api']
+  postgresql['mod_deps_optional'] = ['javax.servlet.api']
+end

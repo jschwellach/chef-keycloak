@@ -24,19 +24,19 @@ default['wildfly']['acp'] = 'simple'
 # => By default, Wildfly expexts this password hash format:
 # => # => username=HEX( MD5( username ':' realm ':' password))
 
-# => Default user - keycloak - s3cr3t
-default['wildfly']['users']['mgmt'] = [
-  { id: 'keycloak', passhash: 'e3deb717efeff956c5481df359972695' }
-]
+# => Default user - wildfly - wildfly
+default['wildfly']['users']['mgmt'].tap do |user|
+  user['keycloak'] = 'e3deb717efeff956c5481df359972695'
+end
 
 # Add application users to the hash 'app'  eg.
 #
-default['wildfly']['users']['app'] = [
-  { id: 'keycloak', passhash: 'e3deb717efeff956c5481df359972695' }
-]
+default['wildfly']['users']['app'].tap do |user|
+  user['keycloak'] = 'e3deb717efeff956c5481df359972695'
+end
 
 # Add application roles eg.
 #
-default['wildfly']['roles']['app'] = [
-  # { id: 'wildfly', roles: 'role1,role2' }
-]
+default['wildfly']['roles']['app'].tap do |role|
+  #  role['wildfly'] = 'role1,role2'
+end
