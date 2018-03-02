@@ -1,0 +1,33 @@
+DEPENDENCIES
+  apt (~> 6.1.4)
+  java (~> 1.50.0)
+  keycloak
+    path: .
+    metadata: true
+  wildfly (~> 1.0.1)
+  yum (~> 5.1.0)
+
+GRAPH
+  apt (6.1.4)
+  compat_resource (12.19.1)
+  homebrew (4.3.0)
+  java (1.50.0)
+    apt (>= 0.0.0)
+    homebrew (>= 0.0.0)
+    windows (>= 0.0.0)
+  keycloak (3.4.3)
+    apt (>= 0.0.0)
+    java (~> 1.50.0)
+    wildfly (~> 1.0.1)
+    yum (>= 0.0.0)
+  ohai (5.2.2)
+  systemd (3.2.1)
+    compat_resource (>= 0.0.0)
+  wildfly (1.0.1)
+    apt (>= 0.0.0)
+    java (~> 1.22)
+    systemd (>= 0.0.0)
+    yum (>= 0.0.0)
+  windows (3.5.1)
+    ohai (>= 4.0.0)
+  yum (5.1.0)

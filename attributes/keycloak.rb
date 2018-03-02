@@ -19,3 +19,6 @@
 
 default['keycloak']['usercache']['enabled'] = true
 default['keycloak']['realmcache']['enabled'] = true
+
+default['keycloak']['realms']['max'] = 100_000
+default['keycloak']['users']['max'] = 100_000

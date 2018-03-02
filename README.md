@@ -5,8 +5,8 @@ This cookbook is based on the wildlfy cookbook (https://github.com/bdwyertech/ch
 [![Build Status](https://travis-ci.org/jschwellach/chef-keycloak.svg?branch=master)](https://travis-ci.org/jschwellach/chef-keycloak)
 
 # Requirements
-- Chef Client 11+
-- Wildfly Cookbook (0.4.2)
+- Chef Client 12+
+- Wildfly Cookbook (1.0.1)
 - Java Cookbook (ignored if node['wildfly']['install_java'] is false)
 
 # Platform
@@ -14,11 +14,11 @@ This cookbook is based on the wildlfy cookbook (https://github.com/bdwyertech/ch
 - Amazon Linux, Amazon
 
 Tested on:
-- CentOS 6.7
+- CentOS 7+
 - Amazon Linux
 
 # Usage
-Please refer to the underlying Wildfly cookbook for all parameters. 
+Please refer to the underlying Wildfly cookbook for all parameters.
 This cookbook overwrites the template used in the Wildfly cookbook to use the configuration coming from Keycloak
 
 
